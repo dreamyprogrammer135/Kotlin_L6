@@ -37,8 +37,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }.apply { start() }
-
         }
+
+
 
         binding.stopButton.setOnClickListener {
             currentWorkerThread?.interrupt()
