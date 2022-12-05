@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d("@@@", "Exeption!!!")
                         break
                     }
+
                     counter++
                     val mills = Calendar.getInstance().timeInMillis
                     Log.d("@@@", "Готовность: $counter Время: $mills")
