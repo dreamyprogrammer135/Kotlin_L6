@@ -23,28 +23,29 @@ class MainActivity : AppCompatActivity() {
                 while (!Thread.currentThread().isInterrupted) {
                     try {
                         Thread.sleep(delay)
-                    }catch (e: InterruptedException) {
+                    } catch (e: InterruptedException) {
                         Log.d("@@@", "Exeption!!!")
                         break
                     }
-
                     counter++
                     val mills = Calendar.getInstance().timeInMillis
                     Log.d("@@@", "Готовность: $counter Время: $mills")
-                    runOnUiThread {
+                    binding.resultTextView.post {
                         binding.resultTextView.text =
                             "${binding.resultTextView.text}\nГотовность: $counter Время: $mills"
                     }
                 }
-            }.apply { start() }
+            }
+            currentWorkerThread?.start()
         }
-
 
 
         binding.stopButton.setOnClickListener {
             currentWorkerThread?.interrupt()
             currentWorkerThread == null
         }
+
+
     }
 
     override fun onDestroy() {
