@@ -1,6 +1,8 @@
 package com.dreamyprogrammer.kotlin_l6
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dreamyprogrammer.kotlin_l6.databinding.ActivityMainBinding
@@ -9,6 +11,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentWorkerThread: Thread? = null
+    //private val handler: Handler = Handler(Looper.getMainLooper())
+    private val handler: Handler by lazy { Handler(mainLooper) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +23,6 @@ class MainActivity : AppCompatActivity() {
             currentWorkerThread = Thread {
                 val delay = 2_000L
                 var counter = 0
-                val currTread = Thread.currentThread()
                 while (!Thread.currentThread().isInterrupted) {
                     try {
                         Thread.sleep(delay)
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     counter++
                     val mills = Calendar.getInstance().timeInMillis
                     Log.d("@@@", "Готовность: $counter Время: $mills")
-                    binding.resultTextView.post {
+                    handler.post {
                         binding.resultTextView.text =
                             "${binding.resultTextView.text}\nГотовность: $counter Время: $mills"
                     }
